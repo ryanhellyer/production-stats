@@ -27,5 +27,8 @@
                 "RyanHellyer\\ProductionStats\\ProductionStatsServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
     }
 }
