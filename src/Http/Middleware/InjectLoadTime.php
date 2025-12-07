@@ -54,9 +54,12 @@ class InjectLoadTime
 
     protected function formatLoadTimeHtml(float $loadTime): string
     {
+        $dateTime = date('Y-m-d H:i:s');
+        
         return sprintf(
-            '<!-- Total page load time: %s ms -->',
-            number_format($loadTime, 2)
+            '<!-- Total page load time: %s ms | Page generated at %s -->',
+            number_format($loadTime, 2),
+            $dateTime
         );
     }
 }
