@@ -10,9 +10,7 @@ use RyanHellyer\ProductionStats\Http\Middleware\InjectLoadTime;
 class ProductionStatsServiceProvider extends ServiceProvider
 {
     public function register()
-    {
-        //
-    }
+    {}
 
     public function boot()
     {

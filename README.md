@@ -2,9 +2,9 @@
 
 Production-ready performance monitoring for Laravel applications. Automatically injects performance statistics as HTML comments—lightweight, secure, and production-safe.
 
-For years I've added basic performance stats to WordPress sites as HTML comments in the footer. They're always available in the HTML source, don't bother users, and help determine if a site is cached and how quickly pages generate. When I moved to Laravel, I missed this functionality and kept manually adding stats to templates. This package automates that process.
+For years I've added basic performance stats to WordPress sites as HTML comments in the footer. They're always available in the HTML source, don't bother users, and help determine if a site is cached and how quickly pages generate. **When I moved to Laravel, I missed this functionality** and kept manually adding stats to templates. This package automates that process.
 
-**Note:** This package injects page load time and generation timestamp information as HTML comments visible in the page source. While this is typically not sensitive information, you shouldn't use this package if you don't want site visitors being able to see this data.
+**Note:** While this package injects into your pages, is typically not sensitive information, you shouldn't use this package if you don't want site visitors being able to see this data.
 
 ## Features
 
@@ -32,7 +32,7 @@ No configuration needed. The package automatically tracks page load times and ge
 ### Example Output
 
 ```html
-<!-- Total page load time: 25.23 ms | Page generated at 2025-01-07 14:30:45 -->
+<!-- Page generated in 42 ms at 2025-12-12 14:43:42 -->
 </body>
 ```
 
@@ -40,12 +40,15 @@ View in your browser's page source.
 
 ## What Gets Tracked
 
-- **Page load time** - Total time from Laravel bootstrap to response (milliseconds)
+- **Page load time** - Time to render from Laravel bootstrap to response (milliseconds)
 - **Generation timestamp** - When the page was generated
 
 ## Changelog
 
-No releases yet.
+### 1.0
+- Initial package release
+- Automatic page load time tracking
+- Generation timestamp display
 
 ## License
 
