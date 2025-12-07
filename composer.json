@@ -1,6 +1,8 @@
 {
     "name": "ryanhellyer/laravel-production-stats",
     "description": "Production-ready performance monitoring for Laravel - automatically track and inject performance statistics into responses",
+    "keywords": ["laravel", "performance", "monitoring", "stats", "production", "load-time"],
+    "homepage": "https://github.com/ryanhellyer/laravel-production-stats",
     "type": "library",
     "license": "GPL-2.0",
     "authors": [
@@ -26,6 +28,4 @@
             ]
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
 }
