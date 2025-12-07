@@ -25,7 +25,7 @@ class InjectLoadTime
                 $loadTimeHtml = $this->formatLoadTimeHtml($loadTime);
 
                 // Inject before closing </body> tag
-s                $content = str_replace('</body>', $loadTimeHtml . '</body>', $content);
+                $content = str_replace('</body>', $loadTimeHtml . '</body>', $content);
 
                 $response->setContent($content);
             }
