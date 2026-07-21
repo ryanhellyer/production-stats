@@ -1,4 +1,4 @@
-# Laravel Production Stats
+# Production Stats
 
 Production-ready performance monitoring for Laravel and Symfony applications. Automatically injects performance statistics as HTML comments—lightweight, secure, and production-safe.
 
