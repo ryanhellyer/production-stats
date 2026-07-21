@@ -1,6 +1,6 @@
 # Laravel Production Stats
 
-Production-ready performance monitoring for Laravel applications. Automatically injects performance statistics as HTML comments—lightweight, secure, and production-safe.
+Production-ready performance monitoring for Laravel and Symfony applications. Automatically injects performance statistics as HTML comments—lightweight, secure, and production-safe.
 
 For years I've added basic performance stats to WordPress sites as HTML comments in the footer. They're always available in the HTML source, don't bother users, and help determine if a site is cached and how quickly pages generate. **When I moved to Laravel, I missed this functionality** and kept manually adding stats to templates. This package automates that process.
 
@@ -17,12 +17,27 @@ For years I've added basic performance stats to WordPress sites as HTML comments
 ## Requirements
 
 - PHP 8.2+
-- Laravel 10+
+- Laravel 10+ or Symfony 6+
 
 ## Installation
 
 ```bash
 composer require ryanhellyer/laravel-production-stats
+```
+
+### Laravel
+
+No further steps needed—the package auto-discovers and registers itself.
+
+### Symfony
+
+Register the bundle in `config/bundles.php`:
+
+```php
+return [
+    // ...
+    RyanHellyer\ProductionStats\Symfony\ProductionStatsBundle::class => ['all' => true],
+];
 ```
 
 ## Usage
@@ -43,7 +58,10 @@ View in your browser's page source.
 Run the test suite with:
 
 ```bash
-composer test
+composer test           # all tests
+composer test-core      # core logic only (no framework deps needed)
+composer test-laravel   # Laravel adapter tests
+composer test-symfony   # Symfony adapter tests
 ```
 
 ## What Gets Tracked
@@ -52,6 +70,13 @@ composer test
 - **Generation timestamp** - When the page was generated
 
 ## Changelog
+
+### 2.0 — 2026-07-20
+- Added Symfony support via event subscriber and bundle
+- Extracted shared injection logic into framework-agnostic `Core\HtmlResponseInjector`
+- Moved Laravel adapter to `Laravel\` namespace with backward-compatibility stub
+- Added `test-core`, `test-laravel`, `test-symfony` test suites
+- Framework dependencies moved to `suggest`; `symfony/http-foundation` is sole hard requirement
 
 ### 1.1.1 — 2026-05-17
 - Fixed composer.json dependencies and description punctuation
