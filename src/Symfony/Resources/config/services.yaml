@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    RyanHellyer\ProductionStats\Core\HtmlResponseInjector: ~
+
+    RyanHellyer\ProductionStats\Symfony\EventSubscriber\InjectLoadTimeSubscriber: ~
