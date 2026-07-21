@@ -1,8 +1,8 @@
 {
-    "name": "ryanhellyer/laravel-production-stats",
+    "name": "ryanhellyer/production-stats",
     "description": "Production-ready performance monitoring for Laravel and Symfony - automatically track and inject performance statistics into HTML responses.",
     "keywords": ["laravel", "symfony", "performance", "monitoring", "stats", "production", "load-time"],
-    "homepage": "https://github.com/ryanhellyer/laravel-production-stats",
+    "homepage": "https://ryan.hellyer.kiwi/projects/production-stats/",
     "type": "library",
     "license": "GPL-2.0",
     "authors": [
@@ -11,6 +11,9 @@
             "email": "ryan@hellyer.kiwi"
         }
     ],
+    "replace": {
+        "ryanhellyer/laravel-production-stats": "self.version"
+    },
     "require": {
         "php": "^8.2",
         "symfony/http-foundation": "^6.0|^7.0"
