@@ -71,6 +71,9 @@ composer test-symfony   # Symfony adapter tests
 
 ## Changelog
 
+### 2.0.1 — 2026-07-20
+- Minor documentation upgrades
+
 ### 2.0 — 2026-07-20
 - Added Symfony support via event subscriber and bundle
 - Extracted shared injection logic into framework-agnostic `Core\HtmlResponseInjector`
