@@ -22,7 +22,7 @@ For years I've added basic performance stats to WordPress sites as HTML comments
 ## Installation
 
 ```bash
-composer require ryanhellyer/laravel-production-stats
+composer require ryanhellyer/production-stats
 ```
 
 ### Laravel
