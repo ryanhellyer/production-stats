@@ -2,40 +2,49 @@
 
 declare(strict_types=1);
 
-namespace RyanHellyer\ProductionStats\Tests\Unit\Http\Middleware;
+namespace RyanHellyer\ProductionStats\Tests\Unit\Laravel;
 
 use Closure;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
-use RyanHellyer\ProductionStats\Http\Middleware\InjectLoadTime;
+use RyanHellyer\ProductionStats\Core\HtmlResponseInjector;
+use RyanHellyer\ProductionStats\Laravel\Http\Middleware\InjectLoadTime;
 use Symfony\Component\HttpFoundation\Response;
 
 class InjectLoadTimeTest extends TestCase
 {
-    private InjectLoadTime $middleware;
+    private HtmlResponseInjector $injector;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->middleware = new InjectLoadTime();
+        $this->injector = new HtmlResponseInjector();
     }
 
-    public function testInjectsLoadTimeIntoHtmlResponse(): void
+    public function testDelegatesToCoreInjector(): void
     {
-        $result = $this->executeMiddleware('<html><body>Test content</body></html>', 'text/html; charset=utf-8');
+        $middleware = new InjectLoadTime($this->injector);
+
+        $result = $this->executeMiddleware(
+            $middleware,
+            '<html><body>Test content</body></html>',
+            'text/html; charset=utf-8'
+        );
 
         $this->assertStringContainsString('<!-- Page generated in', $result);
         $this->assertStringContainsString('ms at', $result);
         $this->assertStringContainsString('-->', $result);
-
-        // Check if timestamp is present
-        $pattern = '/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/';
-        $this->assertMatchesRegularExpression($pattern, $result);
     }
 
     public function testInjectsBeforeClosingBodyTag(): void
     {
-        $result = $this->executeMiddleware('<html><body>Test content</body></html>', 'text/html');
+        $middleware = new InjectLoadTime($this->injector);
+
+        $result = $this->executeMiddleware(
+            $middleware,
+            '<html><body>Test content</body></html>',
+            'text/html'
+        );
 
         $this->assertStringContainsString('</body>', $result);
         $this->assertStringNotContainsString('</body></body>', $result);
@@ -43,8 +52,10 @@ class InjectLoadTimeTest extends TestCase
 
     public function testSkipsJsonResponse(): void
     {
+        $middleware = new InjectLoadTime($this->injector);
+
         $jsonContent = '{"message":"Test"}';
-        $result = $this->executeMiddleware($jsonContent, 'application/json');
+        $result = $this->executeMiddleware($middleware, $jsonContent, 'application/json');
 
         $this->assertStringNotContainsString('<!-- Page generated in', $result);
         $this->assertEquals($jsonContent, $result);
@@ -52,8 +63,10 @@ class InjectLoadTimeTest extends TestCase
 
     public function testSkipsResponseWithNoContentType(): void
     {
+        $middleware = new InjectLoadTime($this->injector);
+
         $content = 'Some content';
-        $result = $this->executeMiddleware($content, '');
+        $result = $this->executeMiddleware($middleware, $content, '');
 
         $this->assertStringNotContainsString('<!-- Page generated in', $result);
         $this->assertEquals($content, $result);
@@ -61,7 +74,9 @@ class InjectLoadTimeTest extends TestCase
 
     public function testHandlesEmptyResponse(): void
     {
-        $result = $this->executeMiddleware('', 'text/html');
+        $middleware = new InjectLoadTime($this->injector);
+
+        $result = $this->executeMiddleware($middleware, '', 'text/html');
 
         $this->assertEquals('', $result);
     }
@@ -69,14 +84,14 @@ class InjectLoadTimeTest extends TestCase
     /**
      * Execute middleware with given content and content type, returning the processed content.
      */
-    private function executeMiddleware(string $content, string $contentType): string
+    private function executeMiddleware(InjectLoadTime $middleware, string $content, string $contentType): string
     {
         $response = new Response($content);
         if ($contentType) {
             $response->headers->set('Content-Type', $contentType);
         }
 
-        $result = $this->middleware->handle(new Request(), $this->createNextMiddleware($response));
+        $result = $middleware->handle(new Request(), $this->createNextMiddleware($response));
         return (string) $result->getContent();
     }
 

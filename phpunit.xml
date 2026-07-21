@@ -9,8 +9,14 @@
          failOnWarning="true"
          failOnRisky="true">
     <testsuites>
-        <testsuite name="Unit">
-            <directory suffix="Test.php">./tests/Unit</directory>
+        <testsuite name="Core">
+            <directory suffix="Test.php">./tests/Unit/Core</directory>
+        </testsuite>
+        <testsuite name="Laravel">
+            <directory suffix="Test.php">./tests/Unit/Laravel</directory>
+        </testsuite>
+        <testsuite name="Symfony">
+            <directory suffix="Test.php">./tests/Unit/Symfony</directory>
         </testsuite>
     </testsuites>
 
